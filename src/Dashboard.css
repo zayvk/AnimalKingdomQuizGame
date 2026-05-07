@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+/* ── Root & Reset ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Dashboard Shell ──────────────────────────────────────── */
+.dashboard {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #1a2e1a;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, #2d4a2d 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, #1e3d1e 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, #243824 0%, transparent 55%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ── Silhouette Layer ─────────────────────────────────────── */
+.silhouette-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.silhouette {
+  position: absolute;
+  display: block;
+  filter: brightness(0.5) sepia(1) saturate(0.3);
+  user-select: none;
+}
+
+/* ── Mute Button ──────────────────────────────────────────── */
+.mute-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.4rem;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 2.8rem;
+  height: 2.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  color: #fff;
+}
+
+.mute-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+}
+
+.mute-btn:active {
+  transform: scale(0.95);
+}
+
+/* ── Main Content ─────────────────────────────────────────── */
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.dashboard-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeSlideDown 0.7s ease both;
+}
+
+.paw-accent {
+  font-size: 2.2rem;
+  animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+.game-title {
+  font-family: 'Righteous', cursive;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  color: #f0e6c8;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.title-highlight {
+  color: #f5a623;
+}
+
+.game-subtitle {
+  font-size: 1.15rem;
+  color: #a8c5a0;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.game-teaser {
+  font-size: 0.95rem;
+  color: rgba(168, 197, 160, 0.7);
+  font-style: italic;
+}
+
+/* ── Mode Section ─────────────────────────────────────────── */
+.modes-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeSlideUp 0.7s 0.2s ease both;
+}
+
+.modes-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(168, 197, 160, 0.55);
+  font-weight: 700;
+}
+
+.mode-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* ── Mode Card Base ───────────────────────────────────────── */
+.mode-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.25rem 1.4rem;
+  border-radius: 1.1rem;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Nunito', sans-serif;
+  transition: transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid transparent;
+  pointer-events: none;
+}
+
+/* ── Active Mode Card ─────────────────────────────────────── */
+.mode-card--active {
+  background: linear-gradient(135deg, #2d5a1b 0%, #3d7a24 100%);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.mode-card--active::before {
+  border-color: rgba(245, 166, 35, 0.5);
+}
+
+.mode-card--active:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 36px rgba(0,0,0,0.45), 0 0 0 2px rgba(245,166,35,0.35);
+}
+
+.mode-card--active:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ── Disabled Mode Card ───────────────────────────────────── */
+.mode-card--disabled {
+  background: rgba(255, 255, 255, 0.04);
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.mode-card--disabled::before {
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* ── Card Internals ───────────────────────────────────────── */
+.mode-card-emoji {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.mode-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.mode-card-title {
+  font-family: 'Righteous', cursive;
+  font-size: 1.25rem;
+  color: #f0e6c8;
+  margin-bottom: 0.25rem;
+  font-weight: 400;
+}
+
+.mode-card--disabled .mode-card-title {
+  color: rgba(240, 230, 200, 0.6);
+}
+
+.mode-card-desc {
+  font-size: 0.88rem;
+  color: rgba(168, 197, 160, 0.8);
+  line-height: 1.5;
+}
+
+.mode-card--disabled .mode-card-desc {
+  color: rgba(168, 197, 160, 0.45);
+}
+
+/* ── Badges ───────────────────────────────────────────────── */
+.mode-card-badge {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.mode-card-badge--play {
+  background: #f5a623;
+  color: #1a2e1a;
+}
+
+.mode-card-badge--soon {
+  background: rgba(255,255,255,0.1);
+  color: rgba(240, 230, 200, 0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── Extras ───────────────────────────────────────────────── */
+.extras-section {
+  animation: fadeSlideUp 0.7s 0.35s ease both;
+}
+
+.fun-facts-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1.5px dashed rgba(168, 197, 160, 0.3);
+  border-radius: 2rem;
+  color: rgba(168, 197, 160, 0.55);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.7rem 1.8rem;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.soon-tag {
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer-note {
+  font-size: 0.8rem;
+  color: rgba(168, 197, 160, 0.35);
+  font-style: italic;
+  animation: fadeSlideUp 0.7s 0.5s ease both;
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .mode-card {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .mode-card-badge {
+    align-self: flex-start;
+    margin-left: calc(2.2rem + 1.1rem);
+  }
+}
