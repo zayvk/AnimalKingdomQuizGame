@@ -1,10 +1,17 @@
+import { useState } from "react";
 import Dashboard from "./Dashboard";
+import HigherLower from "./HigherLower";
 
 export default function App() {
-  const handleStartGame = (mode) => {
-    console.log("Starting mode:", mode);
-    // Game screen routing will go here
-  };
+  const [screen, setScreen] = useState("dashboard");
 
-  return <Dashboard onStartGame={handleStartGame} />;
+  if (screen === "higher-lower") {
+    return <HigherLower onExit={() => setScreen("dashboard")} />;
+  }
+
+  return (
+    <Dashboard onStartGame={(mode) => {
+      if (mode === "higher-lower") setScreen("higher-lower");
+    }} />
+  );
 }
