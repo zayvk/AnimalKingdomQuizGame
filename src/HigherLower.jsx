@@ -249,39 +249,39 @@ export default function HigherLower({ onExit }) {
     setOrbs((prev) => [...prev, { id, side }]);
   };
 
-  const advanceRound = useCallback((winningSide) => {
-    const currentLeft  = leftRef.current;
-    const currentRight = rightRef.current;
-    const currentPool  = poolRef.current;
-    const currentIndex = indexRef.current;
+const advanceRound = useCallback((winningSide) => {
+  const currentPool  = poolRef.current;
+  const currentIndex = indexRef.current;
 
-    if (currentIndex >= currentPool.length) {
-      const remaining = currentPool.filter(
-        (a) => a.id !== currentLeft.id && a.id !== currentRight.id
-      );
-      if (remaining.length === 0) { setPhase("gameover"); return; }
-      const reshuffled = shuffle(remaining);
-      setPool(reshuffled);       poolRef.current  = reshuffled;
-      setPoolIndex(1);           indexRef.current = 1;
-      if (winningSide === "left") {
-        setRightAnimal(reshuffled[0]); rightRef.current = reshuffled[0];
-      } else {
-        setLeftAnimal(reshuffled[0]);  leftRef.current  = reshuffled[0];
-      }
-    } else {
-      const next = currentPool[currentIndex];
-      setPoolIndex(currentIndex + 1); indexRef.current = currentIndex + 1;
-      if (winningSide === "left") {
-        setRightAnimal(next); rightRef.current = next;
-      } else {
-        setLeftAnimal(next);  leftRef.current  = next;
-      }
-    }
+  // No more animals left -> player wins
+  if (currentIndex >= currentPool.length) {
+    setSelected(null);
+    setResult(null);
+    setShowFact(false);
+    setTieMessage(false);
+    setPhase("gameover");
+    return;
+  }
 
-    setSelected(null); setResult(null);
-    setShowFact(false); setTieMessage(false);
-    setPhase("playing");
-  }, []);
+  const next = currentPool[currentIndex];
+
+  setPoolIndex(currentIndex + 1);
+  indexRef.current = currentIndex + 1;
+
+  if (winningSide === "left") {
+    setRightAnimal(next);
+    rightRef.current = next;
+  } else {
+    setLeftAnimal(next);
+    leftRef.current = next;
+  }
+
+  setSelected(null);
+  setResult(null);
+  setShowFact(false);
+  setTieMessage(false);
+  setPhase("playing");
+}, []);
 
   const handlePick = (side) => {
     if (phase !== "playing") return;
